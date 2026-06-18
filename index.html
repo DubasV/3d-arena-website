@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Мощные ПК с RTX 5060, 300 Гу мониторы, PlayStation 5. Тарифы от 180₽/час. Работаем круглосуточно. Москва, Оршанская 9, м. Молодёжная.">
+  <meta name="description" content="Мощные ПК с RTX 5060, 300 Гц мониторы, PlayStation 5. Тарифы от 180₽/час. Работаем круглосуточно. Москва, Оршанская 9, м. Молодёжная.">
   <title>3D АРЕНА — Компьютерный клуб у м. Молодёжная | Оршанская 9 | 24/7</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" cropsorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" cropssorigin>
   <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -24,30 +24,78 @@
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: var(--font-body); overflow-x: hidden; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
     a { color: inherit; text-decoration: none; }
     .nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; background: rgba(7,10,18,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
-    .nav__logo { display: flex; align-items: center; gap: 12px; font-family: var(--font-display); font-size: 20px; color: var(--text); }
+    .nav__logo { display: flex; align-items: center; gap: 12px; font-family: var(--font-display); font-size: 20px; color: var(--text); letter-spacing: 0.04em; }
     .nav__links { display: flex; align-items: center; gap: 32px; list-style: none; }
-    .nav__links a { font-size: 14px; font-weight: 500; color: var(--text-muted); transition: color 0.2s; }
+    .nav__links a { font-size: 14px; font-weight: 500; color: var(--text-muted); transition: color 0.2s; position: relative; }
+    .nav__links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--accent); transition: width 0.25s; }
     .nav__links a:hover { color: var(--text); }
-    .nav__cta { background: var(--accent); color: var(--text) !important; padding: 10px 22px; font-weight: 600; }
-    .hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding-top: var(--nav-h); }
-    .hero__title { font-family: var(--font-display); font-size: clamp(36px,6vw,100px); line-height: 1.1; margin-bottom: 16px; }
-    .hero__title em { font-style: normal; color: var(--glow); }
-    .hero__sub { font-size: 18px; color: var(--text-muted); margin-bottom: 40px; }
-    .btn { display: inline-flex; align-items: center; padding: 14px 32px; font-size: 15px; font-weight: 600; cursor: pointer; }
+    .nav__links a:hover::after { width: 100%; }
+    .nav__cta { background: var(--accent); color: var(--text) !important; padding: 10px 22px; font-weight: 600; font-size: 14px; border: none; transition: background 0.2s; }
+    .nav__cta:hover { background: var(--glow); }
+    .nav__cta::after { display: none !important; }
+    .nav__burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; background: none; border: none; }
+    .nav__burger span { display: block; width: 24px; height: 2px; background: var(--text); }
+    .hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; padding-top: var(--nav-h); }
+    .hero__bg { position: absolute; inset: 0; background: linear-gradient(135deg,rgba(7,10,18,.85) 0%,rgba(13,22,40,.7) 100%),linear-gradient(180deg,#070A12 0%,#0D1628 50%,#070A12 100%); }
+    .hero__neon-line { position: absolute; top: var(--nav-h); left: 0; right: 0; height: 2px; background: linear-gradient(90deg,transparent 0%,var(--glow) 30%,var(--accent) 70%,transparent 100%); box-shadow: 0 0 30px var(--glow); }
+    .hero__content { position: relative; z-index: 2; text-align: center; max-width: 860px; padding: 0 24px; }
+    .hero__badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; background: rgba(26,110,255,.15); border: 1px solid rgba(26,110,255,.4); color: var(--glow); font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 28px; }
+    .hero__badge::before { content: ''; display: block; width: 6px; height: 6px; background: var(--glow); border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.5; } }
+    .hero__title { font-family: var(--font-display); font-size: clamp(36px,6vw,72px); line-height: 1.1; letter-spacing: .02em; margin-bottom: 16px; }
+    .hero__title em { font-style: normal; color: var(--glow); text-shadow: 0 0 40px rgba(77,184,255,.5); }
+    .hero__sub { font-size: clamp(15px,2vw,18px); color: var(--text-muted); margin-bottom: 40px; }
+    .hero__sub strong { color: var(--text); font-weight: 600; }
+    .hero__specs { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 48px; }
+    .hero__spec { padding: 7px 16px; background: var(--bg-card); border: 1px solid var(--border); font-size: 13px; font-weight: 500; color: var(--text-muted); letter-spacing: .04em; }
+    .hero__spec span { color: var(--glow); font-weight: 600; }
+    .hero__btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 32px; font-family: var(--font-body); font-size: 15px; font-weight: 600; letter-spacing: .04em; cursor: pointer; border: none; transition: all 0.25s; }
     .btn--primary { background: var(--accent); color: var(--text); }
-    .btn--outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
-    .stats { display: grid; grid-template-columns: repeat(4,1fr); border-top: 1px solid var(--border); }
+    .btn--primary:hover { background: var(--glow); box-shadow: 0 0 30px rgba(77,184,255,.5); transform: translateY(-1px); }
+    .btn--outline { background: transparent; color: var(--text); border: 1px solid var(--border); text-decoration: none; }
+    .btn--outline:hover { border-color: var(--accent); color: var(--glow); }
+    .hero__scroll { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--text-muted); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; animation: float 3s ease-in-out infinite; }
+    @keyframes float { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
+    .stats { display: grid; grid-template-columns: repeat(4,1fr); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
     .stat { padding: 32px 24px; text-align: center; border-right: 1px solid var(--border); }
-    .stat__num { font-family: var(--font-display); font-size: 36px; color: var(--glow); }
+    .stat:last-child { border-right: none; }
+    .stat__num { font-family: var(--font-display); font-size: 36px; color: var(--glow); line-height: 1; margin-bottom: 6px; }
+    .stat__label { font-size: 13px; color: var(--text-muted); letter-spacing: .04em; }
+    @media (max-width: 768px) {
+      .nav { padding: 0 20px; }
+      .nav__links { display: none; flex-direction: column; gap: 0; }
+      .nav__links.open { display: flex; position: fixed; top: var(--nav-h); left: 0; right: 0; background: rgba(7,10,18,.98); padding: 20px 0; border-bottom: 1px solid var(--border); }
+      .nav__links.open li { padding: 12px 28px; }
+      .nav__burger { display: flex; }
+      .nav__cta { display: none; }
+      .stats { grid-template-columns: repeat(2,1fr); }
+      .stat:nth-child(2) { border-right: none; }
+      .stat:nth-child(3) { border-top: 1px solid var(--border); }
+      .hero__title { font-size: 32px; }
+    }
+    @media (max-width: 480px) {
+      .stats { grid-template-columns: 1fr 1fr; }
+      .stat__num { font-size: 28px; }
+    }
   </style>
 </head>
 <body>
-  <nav class="nav">
-    <a href="#hero" class="nav__logo">3D АРЕНА- 43D ARENA</a>
-    <ul class="nav__links">
+  <nav class="nav" id="nav">
+    <a href="#hero" class="nav__logo">
+      <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg" width="38" height="38">
+        <circle cx="19" cy="19" r="18" stroke="#1C2D4A" stroke-width="1.5"/>
+        <path d="M10 26 C10 16 14 10 19 10 C24 10 28 16 28 26" stroke="#4DB8FF" stroke-width="2" fill="none"/>
+        <path d="M13 26 L13 22 C13 19 15 17 19 17 C23 17 25 19 25 22 L25 26" fill="#0D1628" stroke="#1A6EFF" stroke-width="1.5"/>
+        <rect x="15" y="21" width="8" height="3" fill="#4DB8FF" opacity="0.8"/>
+        <line x1="8" y1="26" x2="30" y2="26" stroke="#1A6EFF" stroke-width="1.5"/>
+      </svg>
+      3D АРЕНА
+    </a>
+    <ul class="nav__links" id="navLinks">
       <li><a href="#about">О клубе</a></li>
       <li><a href="#specs">Железо</a></li>
       <li><a href="#prices">Тарифы</a></li>
@@ -56,41 +104,59 @@
       <li><a href="#contacts">Контакты</a></li>
       <li><a href="https://t.me/IIIDArena" target="_blank" class="nav__cta">Написать нам</a></li>
     </ul>
+    <button class="nav__burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
   </nav>
   <section class="hero" id="hero">
-    <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(7,10,18,.85),0%,rgba(13,22,40,.7),100%)"></div>
-    <div style="position:relative;z-index:2;text-align:center;max-width:860px;padding:0">
-      <div style="display:inline-flex;padding:6px 16px;background:rgba(26,110,255,.15);border:1px solid rgba(26,110,255,.4);color:#4DB8FF;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:28px">Новичкам — 1 час игры в подарок</div>
-      <h1 style="font-family:'vRusso One',sans-serif;font-size:clamp(36px,6vw,100px);line-height:1.1;margin-bottom:16px">
-        Играй на <span style="color:#4DB8FF">топовом</span><br>железе. Рядон<br>с Молодёжной.
+    <div class="hero__bg"></div>
+    <div class="hero__neon-line"></div>
+    <div class="hero__content">
+      <div class="hero__badge">Новичкам — 1 час игры в подарок</span></div>
+      <h1 class="hero__title">
+         Вграй на <em>топовом</em><br>железо. рядом<br>с Молодёжной.
       </h1>
-      <p style="font-size:18px;color:#8BA3C7;margin-bottom:40px">
-        Компьютерный клуб <strong style="color:#fff">3D АРЕНА</strong> — Москва, Оршанская 9<br>
-        Работаем круглосуточно, без выходныхи
-      </p>
-      <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:48px">
-        <span style="padding:7px 16px;background:#0D1628;border:1px solid #1C2D4A;font-size:13px;color:#8BA3C7"><span style="color:#4DB8FF;font-weight:600">RTX 5060</span> — топовая графика</span>
-        <span style="padding:7px 16px;background:#0D1628;border:1px solid #1C2D4A;font-size:13px;color:#8BA3C7"><span style="color:#4DB8FF;font-weight:600">300 ӆ</span> — плавность max.</span>
-        <span style="padding:7px 16px;background:#0D1628;border:1px solid #1C2D4A;font-size:13px;color:#8BA3C7"><span style="color:#4DB8FF;font-weight:600">DDR5 5600</span> — фасть</span>
-        <span style="padding:7px 16px;background:#0D1628;border:1px solid #1C2D4A;font-size:13px;color:#8BA3C7"><span style="color:#4DB8FF;font-weight:600">24/7</span> — без выходныхи</span>
-        <span style="padding:7px 16px;background:#0D1628;border:1px solid #1C2D4A;font-size:13px;color:#8BA3C7"><span style="color:#4DB8FF;font-weight:600">PS5</span> — консольная зона</span>
+      <p class="hero__sub">
+        Вграем клуа <strong>3D АРЕНА</strong> — Владимиро, Оршанская 9<br>
+         Ваботаем круглосуточно, без выходных</p>
+      <div class="hero__specs">
+        <div class="hero__spec"><span>RTX 5060</span> — топовая графика</div>
+        <div class="hero__spec"><span>300 Гц</span> — плавность максимум</div>
+        <div class="hero__spec"><span>DDRu 5600</span> — оперативная память</div>
+        <div class="hero__spec"><span>24/7</span> — без выходныхи</div>
+        <div class="hero__spec"><span>PS5</span> — консольная зона</div>
       </div>
-      <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:16px">
-        <a href="#prices" style="display:inline-flex;align-items:center;padding:14px 32px;background:#1A6EFF; color:#fff;font-size:15px;font-weight:600;text-decoration:none">Смотреть тарифы</a>
-        <a href="#contacts" style="display:inline-flex;align-items:center;padding:14px 32px;background:transparent;color:#fff;border:1px solid #1C2D4A;font-size:15px;font-weight:600;text-decoration:none">Как��обраться</a>
+      <div class="hero__btns">
+        <a href="#prices" class="btn btn--primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+          Смотреть тарифы</a>
+        <a href="#contacts" class="btn btn--outline">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Каж� добраться</a>
       </div>
     </div>
+    <div class="hero__scroll" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      Листать
+    </div>
   </section>
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #1C2D4A">
-    <div style="padding:32px 24px;text-align:center;border-right:1px solid #1C2D4A"><div style="font-family:'Russo One';line-height:1;font-size:36px;color:#4DB8FF;margin-bottom:6px">20</div><div style="font-size:13px;color:#8BA3C7;letter-spacing:.04em">Игровых мест</div></div>
-    <div style="padding:32px 24px;text-align:center;border-right:1px solid #1C2D4A"><div style="font-family:'Russo One';line-height:1;font-size:36px;color:#4DB8FF;margin-bottom:6px">300Гь</div><div style="font-size:13px;color:#8BA3C7;letter-spacing:.04em">Cастота мониторов</div></div>
-    <div style="padding:32px 24px;text-align:center;border-right:1px solid #1C2D4A"><div style="font-family:'Russo One';line-height:1;font-size:36px;color:#4DB8FF;margin-bottom:6px">24/7</div><div style="font-size:13px;color:#8BA3C7;letter-spacing:.04em">Без выходных</div></div>
-    <div style="padding:32px 24px;text-align:center"><div style="font-family:'Russo One';line-height:1;font-size:36px;color:#4DB8FF;margin-bottom:6px">180₽</div><div style="font-size:13px;color:#8BA3C7;letter-spacing:.04em">Час игры от</div></div>
+  <div class="stats">
+    <div class="stat"><div class="stat__num">20</div><div class="stat__label">Игровых мест</div></div>
+    <div class="stat"><div class="stat__num">300<small style="font-size:18px">Гц</small></div><div class="stat__label">Частота мониторов</div></div>
+    <div class="stat"><div class="stat__num">24/7</div><div class="stat__label">Без выходных</div></div>
+    <div class="stat"><div class="stat__num">180<small style="font-size:18px">₽</small></div><div class="stat__label">Час игры от</div></div>
   </div>
+  <div id="about" style="height:80px"></div>
+  <div id="specs" style="height:80px"></div>
+  <div id="prices" style="height:80px"></div>
+  <div id="promo" style="height:80px"></div>
+  <div id="gallery" style="height:80px"></div>
+  <div id="contacts" style="height:80px"></div>
   <script>
+    const burger = document.getElementById('burger');
+    const navLinks = document.getElementById('navLinks');
+    burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(l => l.addEventListener('click', () => navLinks.classList.remove('open')));
     window.addEventListener('scroll', () => {
-      document.querySelector('.nav').style.background = window.scrollY > 50
-        ? 'rgba(7,10,18,.98)' : 'rgba(7,10,18,.92)';
+      document.getElementById('nav').style.background = window.scrollY > 50 ? 'rgba(7,10,18,.98)' : 'rgba(7,10,18,.92)';
     });
   </script>
 </body>
