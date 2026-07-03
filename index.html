@@ -7,7 +7,9 @@
   <title>3D АРЕНА — Компьютерный клуб у м. Молодёжная | Оршанская 9 | 24/7</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Russo+One&family=Inter:wght@400;500;600&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
   <style>
     :root {
       --bg:#070A12; --bg2:#0D1628; --bg3:#0A1220;
@@ -583,7 +585,7 @@
       </div>
     </div>
     <div class="cmap reveal-right">
-      <iframe src="https://yandex.ru/map-widget/v1/?ll=37.404063%2C55.741861&z=16&pt=37.404063,55.741861,pm2rdm" allowfullscreen="true" title="3D АРЕНА на карте"></iframe>
+      <iframe src="https://yandex.ru/map-widget/v1/?ll=37.404063%2C55.741861&z=16&pt=37.404063,55.741861,pm2rdm" loading="lazy" allowfullscreen="true" title="3D АРЕНА на карте"></iframe>
     </div>
   </div>
 </section>
@@ -666,7 +668,16 @@
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); });
   }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
 
-  document.querySelectorAll(".reveal, .reveal-left, .reveal-right").forEach(el => observer.observe(el));
+  document.querySelectorAll(".reveal, .reveal-left, .reveal-right").forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight) {
+      el.style.transition = "none";
+      el.classList.add("visible");
+      requestAnimationFrame(() => { el.style.transition = ""; });
+    } else {
+      observer.observe(el);
+    }
+  });
 </script>
 </body>
 </html>
