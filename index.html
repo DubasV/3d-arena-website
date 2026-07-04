@@ -258,6 +258,29 @@
       .footer__bottom{flex-direction:column}
       .footer__req{text-align:left}
     }
+  
+    /* GAMES / BOOKING / FAQ */
+    .container-g{max-width:1100px;margin:0 auto}
+    .g-title{font-family:'Russo One',sans-serif;font-size:clamp(26px,4vw,40px);margin:0 0 12px}
+    .g-sub{color:var(--muted,#8BA3C7);margin:0 0 28px}
+    .games__grid{display:flex;flex-wrap:wrap;gap:10px}
+    .game-chip{border:1px solid var(--border);padding:10px 16px;border-radius:8px;font-size:14px;background:rgba(26,110,255,.06)}
+    .g-note{margin-top:24px;color:var(--muted,#8BA3C7);font-size:14px;line-height:1.6}
+    .booking__ways{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .bw-card{border:1px solid var(--border);border-radius:12px;padding:26px;background:rgba(13,22,40,.55)}
+    .bw-card h3{font-family:'Russo One',sans-serif;margin:0 0 10px;color:var(--glow)}
+    .bw-card p{color:var(--muted,#8BA3C7);line-height:1.6;margin:0 0 18px}
+    .bw-btns{display:flex;flex-wrap:wrap;gap:12px}
+    .bw-btns a{border:1px solid var(--accent);color:#fff;text-decoration:none;padding:11px 18px;border-radius:8px;font-size:14px;background:rgba(26,110,255,.15)}
+    .bw-btns a:hover{background:var(--accent)}
+    .faq__list{display:flex;flex-direction:column;gap:12px}
+    .faq__item{border:1px solid var(--border);border-radius:10px;background:rgba(13,22,40,.45)}
+    .faq__item summary{cursor:pointer;list-style:none;padding:18px 22px;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .faq__item summary::-webkit-details-marker{display:none}
+    .faq__item summary::after{content:'+';color:var(--glow);font-size:22px;flex-shrink:0}
+    .faq__item[open] summary::after{content:'\2013'}
+    .faq__item p{padding:0 22px 18px;margin:0;color:var(--muted,#8BA3C7);line-height:1.65}
+    @media(max-width:760px){.booking__ways{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -277,9 +300,12 @@
   <ul class="nav__links" id="navLinks">
     <li><a href="#about">О клубе</a></li>
     <li><a href="#specs">Железо</a></li>
+    <li><a href="#games">Игры</a></li>
     <li><a href="#prices">Тарифы</a></li>
+    <li><a href="#booking">Бронь</a></li>
     <li><a href="#promo">Акции</a></li>
     <li><a href="#gallery">Галерея</a></li>
+    <li><a href="#faq">FAQ</a></li>
     <li><a href="#contacts">Контакты</a></li>
     <li><a href="https://t.me/IIIDArena" target="_blank" class="nav__cta">Написать нам</a></li>
   </ul>
@@ -452,6 +478,18 @@
 </section>
 
 <!-- ТАРИФЫ -->
+<!-- GAMES -->
+<section class="section games" id="games">
+  <div class="container-g">
+    <h2 class="g-title reveal">Игры</h2>
+    <p class="g-sub reveal">Всё популярное уже установлено и обновляется — садись и играй.</p>
+    <div class="games__grid reveal">
+      <span class="game-chip">CS 2</span><span class="game-chip">Dota 2</span><span class="game-chip">Valorant</span><span class="game-chip">Fortnite</span><span class="game-chip">PUBG</span><span class="game-chip">GTA V</span><span class="game-chip">Apex Legends</span><span class="game-chip">World of Tanks</span><span class="game-chip">League of Legends</span><span class="game-chip">Rust</span><span class="game-chip">Minecraft</span><span class="game-chip">UFC и EA FC на PS5</span>
+    </div>
+    <p class="g-note reveal">Есть гостевые аккаунты с бесплатными играми (CS 2, Dota 2 и другие) — играть можно без своего аккаунта. Не нашли нужную игру — скажите администратору, установим.</p>
+  </div>
+</section>
+
 <section class="section prices" id="prices">
   <div class="prices__inner">
     <div class="sec-label reveal">Тарифы</div>
@@ -512,6 +550,32 @@
 </section>
 
 <!-- АКЦИИ -->
+<!-- BOOKING -->
+<section class="section booking" id="booking">
+  <div class="container-g">
+    <h2 class="g-title reveal">Бронирование</h2>
+    <p class="g-sub reveal">Займи лучшее место заранее — особенно на вечер и выходные.</p>
+    <div class="booking__ways">
+      <div class="bw-card reveal">
+        <h3>Приложение LANGAME</h3>
+        <p>Найди «3D АРЕНА», выбери место на карте зала и время. Оплаченная бронь держит место до конца сеанса.</p>
+        <div class="bw-btns">
+          <a href="https://apps.apple.com/ru/app/langame/id1642484175" target="_blank" rel="noopener">App Store</a>
+          <a href="https://play.google.com/store/apps/details?id=com.f5computers.langame_aggregator" target="_blank" rel="noopener">Google Play</a>
+        </div>
+      </div>
+      <div class="bw-card reveal">
+        <h3>Позвонить или написать</h3>
+        <p>Скажи, сколько вас и когда будете — администратор подберёт места рядом.</p>
+        <div class="bw-btns">
+          <a href="tel:+79269464456">+7 (926) 946-44-56</a>
+          <a href="https://t.me/IIIDArena" target="_blank" rel="noopener">Telegram</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="section promo" id="promo">
   <div class="promo__inner">
     <div class="sec-label reveal">Акции</div>
@@ -550,6 +614,21 @@
 <div id="gallery" style="height:4px;background:linear-gradient(90deg,var(--accent),var(--glow),var(--accent))"></div>
 
 <!-- КОНТАКТЫ -->
+<!-- FAQ -->
+<section class="section faq" id="faq">
+  <div class="container-g">
+    <h2 class="g-title reveal">Частые вопросы</h2>
+    <div class="faq__list reveal">
+      <details class="faq__item"><summary>Я опаздываю — сколько держится бронь?</summary><p>Оплаченная бронь держит место до конца забронированного времени. Неоплаченная — 15 минут. Задерживаетесь — предупредите администратора, договоримся.</p></details>
+      <details class="faq__item"><summary>Можно прийти со своими девайсами?</summary><p>Конечно: мышь, клавиатура, наушники, коврик — подключим без проблем.</p></details>
+      <details class="faq__item"><summary>Можно со своей едой и напитками?</summary><p>Можно, мы не против. Но у нас тоже есть напитки и снеки — покупая у нас, вы поддерживаете клуб, а мы стараемся для гостей.</p></details>
+      <details class="faq__item"><summary>Пускаете ли несовершеннолетних?</summary><p>Днём — да. Ночью (после 22:00) гости до 18 лет находиться в клубе не могут — таковы правила.</p></details>
+      <details class="faq__item"><summary>Есть ли парковка?</summary><p>Да, во дворе за шлагбаумом, свободные места есть всегда. Позвоните администратору — откроем.</p></details>
+      <details class="faq__item"><summary>Нужен ли свой аккаунт с играми?</summary><p>Не обязательно: на всех ПК есть гостевые аккаунты с бесплатными играми (CS 2, Dota 2 и др.). Для платных игр заходите под своим аккаунтом.</p></details>
+    </div>
+  </div>
+</section>
+
 <section class="section contacts" id="contacts">
   <div class="ornament-overlay" style="opacity:.025">
     <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="op3" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse"><circle cx="100" cy="100" r="60" fill="none" stroke="#4DB8FF" stroke-width="0.8"/><ellipse cx="100" cy="48" rx="12" ry="20" fill="none" stroke="#4DB8FF" stroke-width="0.6"/><ellipse cx="100" cy="152" rx="12" ry="20" fill="none" stroke="#4DB8FF" stroke-width="0.6"/><ellipse cx="48" cy="100" rx="20" ry="12" fill="none" stroke="#4DB8FF" stroke-width="0.6"/><ellipse cx="152" cy="100" rx="20" ry="12" fill="none" stroke="#4DB8FF" stroke-width="0.6"/></pattern></defs><rect width="100%" height="100%" fill="url(#op3)"/></svg>
