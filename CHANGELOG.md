@@ -12,3 +12,15 @@
 - Added clear positioning, verified club facts and quick booking actions.
 - Simplified navigation and improved mobile menu behavior.
 - Removed unverified price and hardware claims from the page description.
+
+## Release 03
+- Replaced unverified homepage metrics with confirmed club facts.
+- Added accurate food and snack service section.
+- Removed public display of unverified prices and promotions pending approval.
+- Improved conversion CTAs for Telegram and phone.
+
+## 2026-07-18
+- Уточнены характеристики двух игровых залов.
+- Зал «Киберспорт»: 10 мониторов 25″, Full HD, 300 Гц, на кронштейнах.
+- Зал «Комфорт»: 10 мониторов 27″, 2K, 180 Гц, на кронштейнах.
+- На первом экране указано 20 игровых мест.
