@@ -48,3 +48,45 @@
       observer.observe(el);
     }
   });
+
+
+  // Сохраняем UTM-метки для будущей аналитики и попапа
+  const params = new URLSearchParams(window.location.search);
+  const utm = {};
+  ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"].forEach(key => {
+    const value = params.get(key);
+    if (value) utm[key] = value;
+  });
+  if (Object.keys(utm).length) localStorage.setItem("arena_utm", JSON.stringify(utm));
+
+  // Универсальные события: позже их подхватит Яндекс Метрика
+  window.dataLayer = window.dataLayer || [];
+  document.querySelectorAll("[data-track]").forEach(el => {
+    el.addEventListener("click", () => {
+      window.dataLayer.push({ event: "arena_click", action: el.dataset.track });
+    });
+  });
+
+  // Лайтбокс галереи
+  const lightbox = document.getElementById("lightbox");
+  if (lightbox) {
+    const lightboxImage = lightbox.querySelector(".lightbox__image");
+    const closeLightbox = () => {
+      lightbox.classList.remove("open");
+      lightbox.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      lightboxImage.removeAttribute("src");
+    };
+    document.querySelectorAll('[data-lightbox="gallery"]').forEach(link => {
+      link.addEventListener("click", event => {
+        event.preventDefault();
+        lightboxImage.src = link.href;
+        lightbox.classList.add("open");
+        lightbox.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+      });
+    });
+    lightbox.querySelector(".lightbox__close").addEventListener("click", closeLightbox);
+    lightbox.addEventListener("click", event => { if (event.target === lightbox) closeLightbox(); });
+    document.addEventListener("keydown", event => { if (event.key === "Escape") closeLightbox(); });
+  }
