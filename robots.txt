@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Host: 3d-arena.ru
+Sitemap: https://3d-arena.ru/sitemap.xml
