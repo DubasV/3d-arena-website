@@ -57,6 +57,14 @@
     const value = params.get(key);
     if (value) utm[key] = value;
   });
+  if (!utm.utm_source && params.has("rb_clickid")) {
+    utm.utm_source = "vk";
+    utm.utm_medium = "cpc";
+  }
+  if (!utm.utm_source && (params.has("yclid") || params.has("etext"))) {
+    utm.utm_source = "yandex";
+    utm.utm_medium = "cpc";
+  }
   if (Object.keys(utm).length) localStorage.setItem("arena_utm", JSON.stringify(utm));
 
   // Лайтбокс галереи
@@ -85,6 +93,6 @@
 
   // Release 06: confirmed prices, promotions, loyalty and first-visit offer.
   const release06 = document.createElement("script");
-  release06.src = "assets/js/release-06.js?v=20260722-1";
+  release06.src = "assets/js/release-06.js?v=20260724-1";
   release06.defer = true;
   document.body.appendChild(release06);

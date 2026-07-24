@@ -140,13 +140,14 @@
     return "";
   };
   const track = (action, details = {}) => {
+    const eventDetails = { ...storedUtm, ...details };
     window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({ event: "arena_event", action, ...details });
+    window.dataLayer.push({ event: "arena_event", action, ...eventDetails });
     const id = window.ARENA_METRIKA_ID;
     if (id && typeof window.ym === "function") {
-      window.ym(id, "reachGoal", action, details);
+      window.ym(id, "reachGoal", action, eventDetails);
       const canonical = canonicalGoal(action);
-      if (canonical && canonical !== action) window.ym(id, "reachGoal", canonical, { source: action, ...details });
+      if (canonical && canonical !== action) window.ym(id, "reachGoal", canonical, { source: action, ...eventDetails });
     }
     if (typeof window.arenaVkTrack === "function") {
       window.arenaVkTrack(action);
