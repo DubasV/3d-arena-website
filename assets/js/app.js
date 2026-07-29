@@ -50,22 +50,30 @@
   });
 
 
-  // Сохраняем UTM-метки для будущей аналитики и попапа
+  // Сохраняем только разрешённые рекламные метки и передаём их в LANGAME.
   const params = new URLSearchParams(window.location.search);
-  const utm = {};
-  ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"].forEach(key => {
+  const attribution = {};
+  const attributionKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "yclid", "rb_clickid", "gclid", "vk_click_id"];
+  attributionKeys.forEach(key => {
     const value = params.get(key);
-    if (value) utm[key] = value;
+    if (value) attribution[key] = value.slice(0, 300);
   });
-  if (!utm.utm_source && params.has("rb_clickid")) {
-    utm.utm_source = "vk";
-    utm.utm_medium = "cpc";
+  try {
+    const saved = JSON.parse(localStorage.getItem("arena_attribution") || "{}");
+    Object.assign(saved, attribution);
+    if (Object.keys(saved).length) {
+      localStorage.setItem("arena_attribution", JSON.stringify(saved));
+      document.querySelectorAll('a[href*="langame.ru"]').forEach(link => {
+        const url = new URL(link.href);
+        Object.entries(saved).forEach(([key, value]) => {
+          if (attributionKeys.includes(key) && value && !url.searchParams.has(key)) url.searchParams.set(key, value);
+        });
+        link.href = url.toString();
+      });
+    }
+  } catch (_) {
+    // Storage can be unavailable in privacy modes; booking remains usable.
   }
-  if (!utm.utm_source && (params.has("yclid") || params.has("etext"))) {
-    utm.utm_source = "yandex";
-    utm.utm_medium = "cpc";
-  }
-  if (Object.keys(utm).length) localStorage.setItem("arena_utm", JSON.stringify(utm));
 
   // Лайтбокс галереи
   const lightbox = document.getElementById("lightbox");
@@ -91,8 +99,47 @@
     document.addEventListener("keydown", event => { if (event.key === "Escape") closeLightbox(); });
   }
 
-  // Release 06: confirmed prices, promotions, loyalty and first-visit offer.
-  const release06 = document.createElement("script");
-  release06.src = "assets/js/release-06.js?v=20260724-1";
-  release06.defer = true;
-  document.body.appendChild(release06);
+  // Analytics is intentionally isolated from content: HTML remains the source of truth.
+  const canonicalGoal = action => {
+    if (action.includes("call")) return "booking_call";
+    if (action.includes("telegram")) return "booking_telegram";
+    if (action.includes("booking")) return "langame_booking";
+    return action;
+  };
+  const track = (action, details = {}) => {
+    const goal = canonicalGoal(action);
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: "arena_event", action, goal, ...details });
+    if (window.ARENA_METRIKA_ID && typeof window.ym === "function") window.ym(window.ARENA_METRIKA_ID, "reachGoal", goal, { source: action, ...details });
+    if (typeof window.arenaVkTrack === "function") window.arenaVkTrack(goal);
+  };
+  document.querySelectorAll("[data-track]").forEach(element => {
+    element.addEventListener("click", () => track(element.dataset.track));
+  });
+
+  // Hall picker: progressive enhancement; all hall pages remain directly linked in HTML.
+  const hallPicker = document.getElementById("hallPicker");
+  if (hallPicker) {
+    const result = document.getElementById("hallResult");
+    const title = document.getElementById("hallResultTitle");
+    const copy = document.getElementById("hallResultText");
+    const details = document.getElementById("hallResultDetails");
+    const options = {
+      speed: { title: "Зал «Киберспорт»", text: "10 мест · 25″ · Full HD · 300 Гц", href: "esports.html", goal: "esports" },
+      detail: { title: "Зал «Комфорт»", text: "10 мест · 27″ · 2K · 180 Гц", href: "comfort.html", goal: "comfort" },
+      console: { title: "Зона PlayStation 5", text: "PS5 · телевизор 65″ · 4K · до 288 Гц в игровом режиме", href: "ps5.html", goal: "ps5" }
+    };
+    hallPicker.addEventListener("submit", event => {
+      event.preventDefault();
+      const data = new FormData(hallPicker);
+      const selected = options[data.get("priority")] || options.speed;
+      title.textContent = selected.title;
+      copy.textContent = selected.text;
+      details.href = selected.href;
+      details.dataset.track = `select_hall_${selected.goal}_picker`;
+      details.onclick = () => track(details.dataset.track);
+      result.hidden = false;
+      track("hall_picker_result", { hall: selected.goal, group: String(data.get("group") || "") });
+      result.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+  }
