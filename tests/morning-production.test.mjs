@@ -37,6 +37,9 @@ assert.equal(
 );
 assert.match(vkPixel, /hasPageView/);
 assert.match(vkPixel, /top-fwz1\.mail\.ru\/js\/code\.js/);
+for (const page of ["index.html", "privacy.html", "esports.html", "comfort.html", "ps5.html", "utro/index.html"]) {
+  assert.match(await read(page), /vk-pixel\.js\?v=20260808-2/);
+}
 
 const loadedQueueEvents = [];
 const loadedQueue = { push: event => loadedQueueEvents.push(event) };
