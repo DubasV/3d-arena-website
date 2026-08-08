@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
+import vm from "node:vm";
 
 const read = path => readFile(new URL(`../${path}`, import.meta.url), "utf8");
 
@@ -36,6 +37,15 @@ assert.equal(
 );
 assert.match(vkPixel, /hasPageView/);
 assert.match(vkPixel, /top-fwz1\.mail\.ru\/js\/code\.js/);
+
+const loadedQueueEvents = [];
+const loadedQueue = { push: event => loadedQueueEvents.push(event) };
+const existingLoader = {};
+assert.doesNotThrow(() => vm.runInNewContext(vkPixel, {
+  window: { ARENA_VK_PIXEL_ID: "3781383", _tmr: loadedQueue },
+  document: { getElementById: id => id === "tmr-code" ? existingLoader : null }
+}));
+assert.equal(loadedQueueEvents.filter(event => event.type === "pageView").length, 0);
 assert.match(sitemap, /https:\/\/3d-arena\.ru\/utro\//);
 assert.doesNotMatch(robots, /Disallow:\s*\/utro/i);
 assert.match(css, /@media\s*\(max-width:\s*520px\)/);
